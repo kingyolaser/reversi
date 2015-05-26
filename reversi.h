@@ -1,5 +1,7 @@
 typedef unsigned long long UINT64;
 typedef int Color;
+typedef int Pos;
+
 #define  BAN_SIZE 8
 #define  BLACK 0
 #define  WHITE 1
@@ -8,6 +10,19 @@ typedef int Color;
 #define  BIT2(x,y)  BIT(POS(x,y))
 #define  POS(x,y)   ((y)*BAN_SIZE+(x))
 #define  getBIT(data,x)  (((data)>>(x))&1)
+typedef struct Analize_result{
+	UINT64 mobility;
+	UINT64 mobility_m9,
+		   mobility_m8,
+		   mobility_m7,
+		   mobility_m1,
+		   mobility_p1,
+		   mobility_p7,
+		   mobility_p8,
+		   mobility_p9;
+	char   mobility_sorted[60];
+} Analize_result;
+
 class Ban{
 	UINT64 koma[2];  //#0: Black, #1:White
 	Color    teban;
@@ -35,5 +50,6 @@ public:
 	void put_simple(int n, Color color){
 		koma[color] |= BIT(n);
 	}
+	void analize(Analize_result*);
 };
 
