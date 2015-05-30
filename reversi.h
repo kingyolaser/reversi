@@ -73,6 +73,9 @@ public:
 	void analize(Analize_result*);
 	bool isEndGame();
 	Color judge();
+	
+	void kifu_in(const char* kifu);
+	
 	friend void taikyoku(Ban&);
 	friend Pos  think(const Ban&, const Analize_result* ana);
 	friend Pos  think_sub(const Ban& ban, const Analize_result* ana, Color *winner);

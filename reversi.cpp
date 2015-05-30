@@ -308,6 +308,40 @@ void Ban::put_and_ana( Pos p, const Analize_result* now_ana, Analize_result *nex
 	pass();  //endgame
 	return;
 }
+
+// *******************************************************************
+void Ban::kifu_in(const char* kifu)
+{	//‘¬“xd‹‚µ‚È‚¢
+	Analize_result ana_result;
+	int kifu_len=strlen(kifu);
+
+	while( kifu_len>=2 ){
+		analize(&ana_result);
+		if( ana_result.mobility == 0 ){
+			pass();
+			if( pass_cnt>=2 ){
+				printf("endgame\n");
+				abort(); //Šû•ˆ‚É‚Ì‚±‚è‚ª‚ ‚é‚Ì‚É—¼PASSËNG
+				break;
+			}else{
+				//printf("pass\n");
+				continue;
+			}
+		}
+		
+		//print(ana_result.mobility);
+		put(str2pos(kifu),&ana_result);
+		kifu_len-=2;
+		kifu+=2;
+	}
+	analize(&ana_result);
+	print(ana_result.mobility);
+	if( isEndGame() ){
+		const char* teban_str[3]={"BLACK","WHITE","DRAW"};
+		printf("Judge=%s\n", teban_str[judge()]);
+	}
+}
+
 // *******************************************************************
 bool Ban::isEndGame()
 {
@@ -466,8 +500,14 @@ int main()
 	Ban  ban;
 	ban.analize(&ana_result);
 	ban.print(ana_result.mobility);
-
+	printf("kifu_in test------------------------\n");
+	ban.init();
+	ban.analize(&ana_result);
+	ban.kifu_in("F5D6C4F4F6F3D3F7E6C5D7E3E2F2G7E7C3G6G5C7D2B4G3C2B2B3B5B6B7C6G2");
+	
 	printf("------------------------\n");
+
+	printf("taikyoku start------------------------\n");
 	ban.init();
 	taikyoku(ban);
 	
